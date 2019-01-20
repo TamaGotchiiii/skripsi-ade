@@ -117,12 +117,18 @@
                   @if(Auth::user()->level_user != 1)
                     <td style="vertical-align: middle;" class="text-center">
                       <div class="btn-group">
-                        @if(Auth::user()->level_user == 0)
+                        @if(Auth::user()->level_user == 0 && $complain->status == 0)
                           <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#takeModal{{$complain->id}}" title="Tangani Keluhan" ><i class="fa fa-check"></i></button>
                         @endif
                         <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#viewModal{{$complain->id}}"><i class="fa fa-eye" title="Lihat Detail Keluhan"></i></button>
-                        <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#editModal{{$complain->id}}"><i class="fa fa-pencil" title="Ubah Data Keluhan"></i></button>
-                        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModal{{$complain->id}}"><i class="fa fa-trash" title="Hapus Data Keluhan"></i></button>
+                        @if($complain->status == 0 || $complain->status == 1)
+                          @if($complain->status == 1)
+                            <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#confirmEditModal"><i class="fa fa-pencil" title="Ubah Data Keluhan"></i></button>
+                          @else
+                          <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#editModal{{$complain->id}}"><i class="fa fa-pencil" title="Ubah Data Keluhan"></i></button>
+                          @endif
+                          <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModal{{$complain->id}}"><i class="fa fa-trash" title="Hapus Data Keluhan"></i></button>
+                        @endif
                       </div>
                     </td>
                   @endif
@@ -142,6 +148,9 @@
               </table>
               <div class="modal fade" id="addModal" role="dialog">
                 @include('app-modal.add-modal')
+              </div>
+              <div class="modal fade" id="confirmEditModal" role="dialog">
+                @include('app-modal.edit-confirm-modal')
               </div>
               @foreach($complains as $complain)
                 <div class="modal fade" id="editModal{{$complain->id}}" role="dialog">

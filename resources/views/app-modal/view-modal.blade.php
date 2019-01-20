@@ -7,7 +7,7 @@
           <h4 class="modal-title" style="color:white">Detail Keluhan</h4>
         </div>
         <div class="modal-body">
-          @if($complain->status == 1)
+          @if($complain->status != 0)
             <label for="">Ditangani Oleh</label>
             <input type="text" readonly class="form-control" value="{{$complain->user->name}}">
           @endif

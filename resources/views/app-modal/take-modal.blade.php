@@ -10,9 +10,6 @@
           <h4>Apakah Anda Yakin Ingin Menangani Keluhan Ini?</h4>
           <label for="">Keluhan : </label><br>
           {!! nl2br(e($complain->description)) !!}<br><br>
-          @if($complain->attachments->count() > 0)
-            <p style="color : #d73925">Note :<br>*Keluhan ini memiliki lampiran, lampiran akan didownload otomatis ketika mengambil keluhan!</p>
-          @endif
         </div>
         <div class="modal-footer">
           <div class="pull-right">
