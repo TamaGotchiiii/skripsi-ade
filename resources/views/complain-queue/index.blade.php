@@ -62,7 +62,7 @@
             <div class="col-xs-12">
             <div class="box box-primary">
             <div class="box-header">
-              <h3 class="box-title"><b>Tabel Antrian Keluhan Keluhan</b></h3>
+              <h3 class="box-title"><b>Tabel Antrian Keluhan</b></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -76,7 +76,7 @@
                   <th class="text-center" style="vertical-align: middle">Jenis Keluhan</th>
                   <th class="text-center" style="vertical-align: middle">Tanggal Masuk</th>
                     <!-- supervisor and operator -->
-                    <th class="text-center col-lg-1" style="vertical-align: middle">Progress</th>
+                    <th class="text-center col-lg-1" style="vertical-align: middle">Status</th>
                   @if(Auth::user()->level_user == 1)
                     <!-- supervisor -->
                     <th class="text-center col-lg-2" style="vertical-align: middle">Sedang Ditangani Oleh</th>
@@ -96,7 +96,7 @@
                   <td>{{$complain->unit->name}}</td>
                   <td>{{str_limit($complain->description, $limit = 100, $end = '...')}}</td>
                   <td>{{$complain->complain_type->title}}</td>
-                  <td>{{$complain->created_at->format('D, d M Y')}}</td> 
+                  <td>{{$complain->created_at->format('d M Y')}}</td> 
                     <!-- Operator And Supervisor -->
                     @if($complain->status == 0)
                       <td style="vertical-align: middle;"><i class="dot-queue"></i> Dalam Antrian</td>
@@ -109,7 +109,7 @@
                         <td>{{$complain->user->name}}</td>
                       @endif
                     @else
-                      <td style="vertical-align: middle;"><i class="dot-done"></i> Selesai</td>
+                      <td style="vertical-align: middle;"><i class="dot-done"></i> Selesai, {{$complain->updated_at->format('d M Y')}}</td>
                       @if(Auth::user()->level_user == 1)
                         <td>{{$complain->user->name}}</td>
                       @endif
@@ -118,7 +118,7 @@
                     <td style="vertical-align: middle;" class="text-center">
                       <div class="btn-group">
                         @if(Auth::user()->level_user == 0 && $complain->status == 0)
-                          <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#takeModal{{$complain->id}}" title="Tangani Keluhan" ><i class="fa fa-check"></i></button>
+                          <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#takeModal{{$complain->id}}" title="Tangani Keluhan" ><i class="fa fa-sign-in"></i></button>
                         @endif
                         <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#viewModal{{$complain->id}}"><i class="fa fa-eye" title="Lihat Detail Keluhan"></i></button>
                         @if($complain->status == 0 || $complain->status == 1)

@@ -12,6 +12,22 @@
               <label for="">Nama</label>
               <input type="text" class="form-control" name="name" value="{{$complain->name}}">
             </div>
+            @if(Auth::user()->level_user == 0)
+              <div class="form-group">
+                <label for="">Fakultas/Unit</label>
+                <select name="" id="" class="form-control">
+                  <option value="{{$complain->unit_id}}">{{$complain->unit->name}}</option>
+                  @foreach($units as $unit)
+                    <option value="{{$unit->id}}">{{$unit->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+            @else
+              <div class="form-group">
+                <label for="">Fakultas/Unit</label>
+                <input type="text" class="form-control" value="{{$user->unit->name}}" readonly>
+              </div>
+            @endif
             <div class="form-group">
               <label for="">No. Identitas/NIM/NIP</label>
               <input type="text" name="id_number" class="form-control" value="{{$complain->id_number}}">

@@ -13,6 +13,8 @@
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 'ComplainController@index');
+    Route::get('/keluhan-dalam-pengerjaan', 'ComplainController@inProgress');
+    Route::get('/keluhan-selesai', 'ComplainController@complete');
 });
 
 Auth::routes();
