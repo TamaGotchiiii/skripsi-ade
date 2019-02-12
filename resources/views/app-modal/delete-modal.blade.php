@@ -10,8 +10,7 @@
           <h4>@if($complain->status == 1) Keluhan ini dalam pengerjaan, @endif
             Apakah Anda Yakin Ingin Menghapus Data Keluhan Ini?
           </h4>
-          <label for="">Keluhan : </label><br>
-          {!! nl2br(e($complain->description)) !!}<br><br>  
+          <label for="">Kode Antrian : {{$complain->complain_code}}</label><br>
         </div>
         <div class="modal-footer">
           <div class="pull-right">

@@ -28,11 +28,11 @@ class ComplainController extends Controller
                     ->orderBy('status', 'asc')
                     ->get();
             } else {
-                $complains = Complain::with('user', 'complain_type', 'unit', 'attachments', 'user')
+                $complains = Complain::with('complain_type', 'unit', 'attachments', 'user')
                     ->get();
             }
 
-            return view('complain-queue.index', compact('complains', 'complain_types', 'queue', 'onProgress', 'done', 'units'));
+            return view('complain-queue.index', compact('complains', 'complain_types', 'queue', 'onProgress', 'done', 'units', 'user'));
         } else {
             $complains = Complain::with('complain_type', 'unit', 'attachments', 'user')
                 ->where('unit_id', '=', Auth::user()->unit_id)
@@ -76,5 +76,10 @@ class ComplainController extends Controller
 
             return view('complain-complete.index', compact('complains'));
         }
+    }
+
+    public function redirect()
+    {
+        return redirect('/antrian-keluhan');
     }
 }

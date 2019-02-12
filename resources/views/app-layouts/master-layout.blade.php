@@ -6,6 +6,7 @@
   <title>SIM Keluhan Unmul</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{asset('admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
@@ -19,6 +20,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('admin-lte/dist/css/skins/_all-skins.min.css')}}">
+
   <style>
     .modal { 
       overflow: auto !important; 
@@ -46,7 +48,6 @@
       border-radius: 50%;
       display: inline-block;
     }
-
     
   </style>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -84,32 +85,37 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin-lte/dist/js/demo.js')}}"></script>
 <!-- page script -->
+<script src="{{asset('js/support.js')}}"></script>
 <script>
-  $(document).ready(function(){
-      $('#chooser').click(function(){
-          $('#chooseFile').click();
-          $('input[type="file"]#chooseFile').change(function(e){
-              var filename = e.target.files[0].name;
-              $('#filename').val(filename);
-          });
-      });
-      $('.addFile').click(function(){
-        $('input[type="file"]#chooseFile').val('');
-        $('#filename').val('');
-      });
+  let a = {{Auth::user()->level_user}}
+let url = String(window.location.href);
+if(a == 0 && url.includes('/antrian-keluhan')){
+$(function () {
+  $('#example2').DataTable({
+  'paging'      : true,
+  'lengthChange': false,
+  'searching'   : true,
+  'ordering'    : true,
+  'info'        : false,
+  'autoWidth'   : false,
+  'pageLength' : 5,
+  'order': [[5, 'asc'], [4,'asc']]
   });
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : false,
-      'autoWidth'   : false,
-      'pageLength' : 5,
-    })
-  })
+
+});
+}else{
+$(function () {
+  $('#example2').DataTable({
+    'paging'      : true,
+  'lengthChange': false,
+  'searching'   : true,
+  'ordering'    : true,
+  'info'        : false,
+  'autoWidth'   : false,
+  'pageLength' : 5,
+  });
+});
+}
 </script>
 </body>
 </html>

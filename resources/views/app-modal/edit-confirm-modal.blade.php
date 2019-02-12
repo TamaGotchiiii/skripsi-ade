@@ -8,8 +8,7 @@
         </div>
         <div class="modal-body">
           <h4><span style="color:red">Keluhan Sedang Dikerjakan!</span>, Apakah Anda Yakin Ingin Mengubah Keluhan Ini?</h4>
-          <label for="">Keluhan : </label><br>
-          {!! nl2br(e($complain->description)) !!}<br><br>
+          <label for="">Kode Antrian : {{$complain->complain_code}}</label><br>
         </div>
         <div class="modal-footer">
           <div class="pull-right">

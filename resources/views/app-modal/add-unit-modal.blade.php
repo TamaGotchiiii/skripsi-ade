@@ -4,15 +4,18 @@
       <div class="modal-content">
         <div class="modal-header" style="background: #3c8dbc">
           <button type="button" style="color: white" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="color:white">Caution!!!</h4>
+          <h4 class="modal-title" style="color:white">Tambah Fakultas/Unit</h4>
         </div>
         <div class="modal-body">
-          <h4>Apakah Anda Yakin Ingin Menangani Keluhan Ini?</h4>
-          <label for="">Kode Antrian : {{$complain->complain_code}}</label><br>
+          <div class="form-group">
+            <label for="">Nama fakultas/Unit : </label>
+            <input type="text" name="fakultas" id="addFakultas" class="form-control">
+          </div>
+          
         </div>
         <div class="modal-footer">
           <div class="pull-right">
-            <button type="button" class="btn btn-lg btn-primary">Ya</button>
+            <button type="button" id="addUnitBtn" class="btn btn-lg btn-primary">Submit</button>
             <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
           </div>
         </div>

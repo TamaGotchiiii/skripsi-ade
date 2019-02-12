@@ -66,53 +66,44 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-striped table-hover">
+              <table id="example2" class="col-lg-12 table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                  <th class="text-center" style="vertical-align: middle">No.</th>
-                  <th class="text-center  col-lg-2" style="vertical-align: middle">Nama</th>
-                  <th class="text-center" style="vertical-align: middle">Unit/Fakultas</th>
-                  <th class="text-center col-lg-6" style="vertical-align: middle">Keluhan</th>
+                  <th class="text-center col-lg-1" style="vertical-align: middle">Kode Antrian</th>
+                  <th class="text-center" style="vertical-align: middle">Nama</th>
+                  <th class="text-center col-lg-3" style="vertical-align: middle">Keluhan</th>
                   <th class="text-center" style="vertical-align: middle">Jenis Keluhan</th>
-                  <th class="text-center" style="vertical-align: middle">Tanggal Masuk</th>
-                    <!-- supervisor and operator -->
-                    <th class="text-center col-lg-1" style="vertical-align: middle">Status</th>
-                  @if(Auth::user()->level_user == 1)
-                    <!-- supervisor -->
-                    <th class="text-center col-lg-2" style="vertical-align: middle">Sedang Ditangani Oleh</th>
-                  @endif
+                  <th class="text-center " style="vertical-align: middle">Tanggal Masuk</th>
+                  <th class="text-center " style="vertical-align: middle">Status</th>
+                  <th class="text-center " style="vertical-align: middle">Ditangani Oleh</th>
                   @if(Auth::user()->level_user != 1)
-                    <!-- Admin and Operator -->
-                    <th class="text-center col-lg-3" style="vertical-align: middle">Aksi</th>
+                    <th class="text-center col-lg-2" style="vertical-align: middle">Aksi</th>
                   @endif
                 </tr>
                 </thead>
                 <tbody>
-                <?php $x = 1; ?>
                 @foreach($complains as $complain)
+                <div class="data">
                 <tr>
-                  <td >{{$x}}</td>
-                  <td>{{$complain->name}}</td>
-                  <td>{{$complain->unit->name}}</td>
-                  <td>{{str_limit($complain->description, $limit = 100, $end = '...')}}</td>
-                  <td>{{$complain->complain_type->title}}</td>
-                  <td>{{$complain->created_at->format('d M Y')}}</td> 
+                  <td style="vertical-align: middle;">{{$complain->complain_code}}</td>
+                  <td style="vertical-align: middle;">{{$complain->name}}</td>
+                  <td style="vertical-align: middle;">{{str_limit($complain->description, $limit = 100, $end = '...')}}</td>
+                  <td style="vertical-align: middle;">{{$complain->complain_type->title}}</td>
+                  <td style="vertical-align: middle;">{{$complain->created_at->format('d M Y')}}</td> 
                     <!-- Operator And Supervisor -->
                     @if($complain->status == 0)
                       <td style="vertical-align: middle;"><i class="dot-queue"></i> Dalam Antrian</td>
-                      @if(Auth::user()->level_user == 1)
-                        <td>Belum Ditangani</td>
-                      @endif
+                      <td style="vertical-align: middle;">Belum Ditangani</td>
                     @elseif($complain->status == 1)
                       <td style="vertical-align: middle;"><i class="dot-progress"></i> Sedang Dikerjakan</td>
-                      @if(Auth::user()->level_user == 1)
-                        <td>{{$complain->user->name}}</td>
-                      @endif
+                      
+                      <td style="vertical-align: middle;">{{$complain->user->name}}</td>
+                      
                     @else
                       <td style="vertical-align: middle;"><i class="dot-done"></i> Selesai, {{$complain->updated_at->format('d M Y')}}</td>
-                      @if(Auth::user()->level_user == 1)
-                        <td>{{$complain->user->name}}</td>
-                      @endif
+                      
+                      <td style="vertical-align: middle;">{{$complain->user->name}}</td>
+                      
                     @endif
                   @if(Auth::user()->level_user != 1)
                     <td style="vertical-align: middle;" class="text-center">
@@ -133,7 +124,7 @@
                     </td>
                   @endif
                 </tr>
-                <?php ++$x; ?>
+                </div>
                 @endforeach
                 </tbody>
                 @if(Auth::user()->level_user == 2)
@@ -146,12 +137,8 @@
                   </tfoot>
                 @endif
               </table>
-              <div class="modal fade" id="addModal" role="dialog">
-                @include('app-modal.add-modal')
-              </div>
-              <div class="modal fade" id="confirmEditModal" role="dialog">
-                @include('app-modal.edit-confirm-modal')
-              </div>
+              
+
               @foreach($complains as $complain)
                 <div class="modal fade" id="editModal{{$complain->id}}" role="dialog">
                   @include('app-modal.edit-modal')
@@ -166,6 +153,9 @@
                   @include('app-modal.view-modal')
                 </div>
               @endforeach
+              <div class="modal fade" id="addModal" role="dialog">
+                @include('app-modal.add-modal')
+              </div>
               <div class="modal fade" id="attachmentModal" role="dialog">
                 @include('app-modal.attachment-modal')
               </div>

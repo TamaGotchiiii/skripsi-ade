@@ -2,17 +2,19 @@
     
       <!-- Modal content-->
       <div class="modal-content">
-        <div class="modal-header" style="background: #3c8dbc">
+        <div class="modal-header" style="background: #dd4b39">
           <button type="button" style="color: white" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="color:white">Caution!!!</h4>
+          <h4 class="modal-title" style="color:white">Warning!!!</h4>
         </div>
         <div class="modal-body">
-          <h4>Apakah Anda Yakin Ingin Menangani Keluhan Ini?</h4>
-          <label for="">Kode Antrian : {{$complain->complain_code}}</label><br>
+          <h4>
+            Apakah Anda Yakin Ingin Menghapus Data User Ini?
+          </h4>
+          <label for="">Nama : {{$user->name}}</label>  
         </div>
         <div class="modal-footer">
           <div class="pull-right">
-            <button type="button" class="btn btn-lg btn-primary">Ya</button>
+            <button type="button" class="btn btn-lg btn-danger">Ya</button>
             <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
           </div>
         </div>

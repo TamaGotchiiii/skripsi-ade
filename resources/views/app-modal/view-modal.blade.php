@@ -11,7 +11,11 @@
             <label for="">Ditangani Oleh</label>
             <input type="text" readonly class="form-control" value="{{$complain->user->name}}">
           @endif
-          <form action="">
+          <br>
+            <div class="form-group">
+              <label for="">Kode Antrian</label>
+              <input type="text" class="form-control" name="complain_code" readonly value="{{$complain->complain_code}}">
+            </div>
             <div class="form-group">
               <label for="">Nama</label>
               <input type="text" class="form-control" name="name" readonly value="{{$complain->name}}">

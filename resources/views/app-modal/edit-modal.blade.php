@@ -9,6 +9,10 @@
         <div class="modal-body">
           <form action="">
             <div class="form-group">
+              <label for="">Kode Antrian</label>
+              <input type="text" class="form-control" name="complain_code" readonly value="{{$complain->complain_code}}">
+            </div>
+            <div class="form-group">
               <label for="">Nama</label>
               <input type="text" class="form-control" name="name" value="{{$complain->name}}">
             </div>

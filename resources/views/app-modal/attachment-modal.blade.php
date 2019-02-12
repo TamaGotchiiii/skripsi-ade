@@ -9,7 +9,7 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="">Masukkan Nama Lampiran</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" required>
           </div>
           <div class="form-group">
             <label for="">Pilih File</label>

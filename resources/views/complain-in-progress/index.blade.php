@@ -20,23 +20,21 @@
               <table id="example2" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                  <th class="text-center" style="vertical-align: middle">No.</th>
-                  <th class="text-center  col-lg-2" style="vertical-align: middle">Nama</th>
-                  <th class="text-center" style="vertical-align: middle">Unit/Fakultas</th>
-                  <th class="text-center col-lg-6" style="vertical-align: middle">Keluhan</th>
+                <th class="text-center col-lg-1" style="vertical-align: middle">Kode Antrian</th>
+                  <th class="text-center" style="vertical-align: middle">Nama</th>
+                  <th class="text-center col-lg-3" style="vertical-align: middle">Keluhan</th>
                   <th class="text-center" style="vertical-align: middle">Jenis Keluhan</th>
-                  <th class="text-center" style="vertical-align: middle">Tanggal Masuk</th>
-                  <th class="text-center" style="vertical-align: middle">Lampiran</th>
-                  <th class="text-center col-lg-3" style="vertical-align: middle">Aksi</th>
+                  <th class="text-center " style="vertical-align: middle">Tanggal Masuk</th>      
+                  <th class="text-center" style="vertical-align: middle">Lampiran</th>            
+                  <th class="text-center col-lg-2" style="vertical-align: middle">Aksi</th>                  
                 </tr>
                 </thead>
                 <tbody>
                 <?php $x = 1; ?>
                 @foreach($complains as $complain)
                 <tr>
-                  <td >{{$x}}</td>
+                  <td >{{$complain->complain_code}}</td>
                   <td>{{$complain->name}}</td>
-                  <td>{{$complain->unit->name}}</td>
                   <td>{{str_limit($complain->description, $limit = 100, $end = '...')}}</td>
                   <td>{{$complain->complain_type->title}}</td>
                   <td>{{$complain->created_at->format('D, d M Y')}}</td>

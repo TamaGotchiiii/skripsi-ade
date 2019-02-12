@@ -12,9 +12,13 @@
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', 'ComplainController@index');
+    Route::get('/', 'ComplainController@redirect');
+    Route::get('/antrian-keluhan', 'ComplainController@index');
     Route::get('/keluhan-dalam-pengerjaan', 'ComplainController@inProgress');
     Route::get('/keluhan-selesai', 'ComplainController@complete');
+    Route::get('/daftar-user', 'UserController@userList');
+    Route::post('/check-email', 'UserController@checkEmail');
+    Route::post('/check-username', 'UserController@checkUsername');
 });
 
 Auth::routes();

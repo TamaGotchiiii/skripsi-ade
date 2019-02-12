@@ -13,6 +13,7 @@ class CreateComplainsTable extends Migration
     {
         Schema::create('complains', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('complain_code')->unique();
             $table->string('name');
             $table->string('id_number');
             $table->string('email');
