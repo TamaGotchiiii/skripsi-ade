@@ -15,7 +15,7 @@
         <div class="modal-footer">
           <div class="pull-right">
             <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#confirmReset{{$user->id}}">Ya</button>
-            <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
+            <button type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Tidak</button>
           </div>
         </div>
       </div>

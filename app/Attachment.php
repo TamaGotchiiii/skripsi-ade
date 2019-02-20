@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Attachment extends Model
 {
     protected $fillable = [
+        'title',
         'name',
         'complain_id',
     ];

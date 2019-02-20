@@ -1,5 +1,9 @@
 @extends('app-layouts.master-layout')
 
+@section('js')
+  <script src="{{asset('js/complain/app.js')}}"></script>
+@endsection
+
 @section('content')
     <section class="content-header">
       <h1>
@@ -20,13 +24,13 @@
               <table id="example2" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                <th class="text-center col-lg-1" style="vertical-align: middle">Kode Antrian</th>
+                  <th class="text-center col-lg-1" style="vertical-align: middle">Kode Antrian</th>
                   <th class="text-center" style="vertical-align: middle">Nama</th>
                   <th class="text-center col-lg-3" style="vertical-align: middle">Keluhan</th>
                   <th class="text-center" style="vertical-align: middle">Jenis Keluhan</th>
                   <th class="text-center " style="vertical-align: middle">Tanggal Masuk</th>      
                   <th class="text-center" style="vertical-align: middle">Lampiran</th>            
-                  <th class="text-center col-lg-2" style="vertical-align: middle">Aksi</th>                  
+                  <th class="text-center col-lg-2" style="vertical-align: middle">Aksi</th>              
                 </tr>
                 </thead>
                 <tbody>
@@ -59,7 +63,7 @@
                 </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="8">
+                      <td colspan="7">
                         <button type="button" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"></i> Tambah Data Keluhan</button>
                       </td>
                     </tr>

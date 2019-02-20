@@ -14,7 +14,7 @@
         </div>
         <div class="modal-footer">
           <div class="pull-right">
-            <button type="button" class="btn btn-lg btn-danger">Ya</button>
+            <button type="button" class="btn btn-lg btn-danger delete-user" data-id="{{$user->id}}">Ya</button>
             <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
           </div>
         </div>

@@ -1,5 +1,9 @@
 @extends('app-layouts.master-layout')
 
+@section('js')
+  <script src="{{url('js/user/app.js')}}"></script>
+@endsection
+
 @section('content')
     <section class="content-header">
       <h1>
@@ -49,7 +53,7 @@
                       <div class="btn-group">
                         <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#resetPass{{$user->id}}" title="Reset Password"><i class="fa fa-key"></i></button>
                         <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#editModal{{$user->id}}" title="Edit User"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModal{{$user->id}}" title="Hapus User"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-xs btn-danger" data-id="{{$user->id}}" data-toggle="modal" data-target="#deleteModal{{$user->id}}" title="Hapus User"><i class="fa fa-trash"></i></button>
                       </div>
                     </td>
                 </tr>
@@ -68,13 +72,13 @@
                 <div class="modal fade" id="deleteModal{{$user->id}}" role="dialog">
                     @include('app-modal.delete-user')
                 </div>
-                <div class="modal fade" id="editModal{{$user->id}}" role="dialog">
+                <div class="modal fade edit-user-modal" id="editModal{{$user->id}}" data-id="{{$user->id}}" role="dialog">
                   @include('app-modal.edit-user')
                 </div>
                 <div class="modal fade" id="resetPass{{$user->id}}" role="dialog">
                   @include('app-modal.reset-password')
                 </div>
-                <div class="modal fade" id="confirmReset{{$user->id}}" role="dialog">
+                <div class="modal fade confirm-pass" id="confirmReset{{$user->id}}" role="dialog">
                   @include('app-modal.confirm-reset')
                 </div>
               @endforeach

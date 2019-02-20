@@ -7,64 +7,54 @@
           <h4 class="modal-title" style="color:white">Detail Keluhan</h4>
         </div>
         <div class="modal-body">
-          @if($complain->status != 0)
+          <div class="form-group handle-by">
             <label for="">Ditangani Oleh</label>
-            <input type="text" readonly class="form-control" value="{{$complain->user->name}}">
-          @endif
-          <br>
+            <input type="text" readonly class="form-control handle-by-field" value="">
+          </div>
             <div class="form-group">
               <label for="">Kode Antrian</label>
-              <input type="text" class="form-control" name="complain_code" readonly value="{{$complain->complain_code}}">
+              <input type="text" class="form-control view-complain-code" name="complain_code" readonly value="">
             </div>
             <div class="form-group">
               <label for="">Nama</label>
-              <input type="text" class="form-control" name="name" readonly value="{{$complain->name}}">
+              <input type="text" class="form-control view-complain-name" name="name" readonly value="">
             </div>
             <div>
               <label for="">Fakultas/Unit</label>
-              <input type="text" class="form-control" readonly value="{{$complain->unit->name}}">
+              <input type="text" class="form-control view-complain-unit" readonly value="">
             </div>
             <div class="form-group">
               <label for="">No. Identitas/NIM/NIP</label>
-              <input type="text" name="id_number" class="form-control" readonly value="{{$complain->id_number}}">
+              <input type="text" name="id_number" class="form-control view-complain-id" readonly value="">
             </div>
             <div class="form-group">
               <label for="">Email</label>
-              <input type="email" name="email" class="form-control" readonly value="{{$complain->email}}">
+              <input type="email" name="email" class="form-control view-complain-email" readonly value="">
             </div>
             <div class="form-group">
               <label for="">Keluhan</label>
-              <textarea style="white-space: pre-wrap" name="" id="" cols="30" rows="10" class="form-control" readonly>{{$complain->description}}</textarea>
+              <textarea style="white-space: pre-wrap" name="" id="" cols="30" rows="10" class="form-control view-complain-description" readonly></textarea>
             </div>
             <div class="form-group">
               <label for="">Jenis Keluhan</label>
-              <input type="text" class="form-control" value="{{$complain->complain_type->title}}" readonly>
+              <input type="text" class="form-control view-complain-type" value="" readonly>
             </div>
           </form>
-          @if($complain->attachments->count() > 0)
             <div class="form-group">
               <label for="">Lampiran</label>
               <!-- tampilan bisa dimaksimalkan menggunakan dropzone.js -->
               <!-- <input multiple="multiple" name="photos[]" type="file"> -->
             </div>
-            <table id="1" class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" id="viewAttachment">
                   <thead>
                   <tr>
                     <th class="text-center" style="vertical-align: middle">No.</th>
                     <th class="text-center" style="vertical-align: middle">Lampiran</th>
+                    <th class="text-center" style="vertical-align: middle">Status File</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <?php $x = 1; ?>
-                  <div class="attachment-table">
-                    @foreach($complain->attachments as $attachment)
-                      <tr>
-                        <td >{{$x}}</td>
-                        <td>{{$attachment->title}}</td>
-                      </tr>
-                      <?php ++$x; ?>
-                    @endforeach
-                  </div>
+                  
                   </tbody>
                   <!-- <tfoot>
                     <tr>
@@ -74,11 +64,9 @@
                     </tr>
                   </tfoot> -->
             </table>
-          @endif
         </div>
         <div class="modal-footer">
           <div class="btn-group pull-right">
-            <button type="button" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>

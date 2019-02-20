@@ -10,50 +10,51 @@
           <form action="">
             <div class="form-group">
               <label for="">Kode Antrian</label>
-              <input type="text" class="form-control" name="complain_code" readonly value="{{$complain->complain_code}}">
+              <input type="text" class="form-control edit-complain-code" name="complain_code" readonly value="">
             </div>
-            <div class="form-group">
+            <div class="form-group complain-name-frame">
               <label for="">Nama</label>
-              <input type="text" class="form-control" name="name" value="{{$complain->name}}">
+              <input type="text" class="form-control complain-name-field edit-complain-name" id="editComplainName{{$complain->id}}" name="name" value="">
+              <b><span class="complain-name-status"></span></b>
             </div>
             @if(Auth::user()->level_user == 0)
-              <div class="form-group">
+              <div class="form-group complain-unit-frame">
                 <label for="">Fakultas/Unit</label>
-                <select name="" id="" class="form-control">
+                <select name="" id="editComplainUnit{{$complain->id}}" class="form-control complain-select-unit">
                   <option value="{{$complain->unit_id}}">{{$complain->unit->name}}</option>
                   @foreach($units as $unit)
                     <option value="{{$unit->id}}">{{$unit->name}}</option>
                   @endforeach
                 </select>
+                <b><span class="complain-unit-status"></span></b>
               </div>
             @else
               <div class="form-group">
                 <label for="">Fakultas/Unit</label>
-                <input type="text" class="form-control" value="{{$user->unit->name}}" readonly>
+                <input type="text" class="form-control edit-complain-unit" value="" readonly>
               </div>
             @endif
-            <div class="form-group">
+            <div class="form-group complain-id-frame">
               <label for="">No. Identitas/NIM/NIP</label>
-              <input type="text" name="id_number" class="form-control" value="{{$complain->id_number}}">
+              <input type="text" id="editComplainId{{$complain->id}}" name="id_number" class="form-control complain-id-field edit-complain-id" value="">
+              <b><span class="complain-id-status"></span></b>
             </div>
-            <div class="form-group">
+            <div class="form-group complain-email-frame">
               <label for="">Email</label>
-              <input type="email" name="email" class="form-control" value="{{$complain->email}}">
+              <input type="email" id="editComplainEmail{{$complain->id}}" name="email" class="form-control complain-email-field edit-complain-email" value="">
+              <b><span class="complain-email-status"></span></b>
             </div>
-            <div class="form-group">
+            <div class="form-group complain-complain-frame">
               <label for="">Keluhan</label>
-              <textarea style="white-space: pre-wrap" name="" id="" cols="30" rows="10" class="form-control">{{$complain->description}}</textarea>
+              <textarea style="white-space: pre-wrap" name="" id="editComplainComplain{{$complain->id}}" cols="30" rows="10" class="form-control complain-complain-field edit-complain-description"></textarea>
+              <b><span class="complain-complain-status"></span></b>
             </div>
-            <div class="form-group">
+            <div class="form-group complain-type-frame">
               <label for="">Jenis Keluhan</label>
-              <select name="" id="" class="form-control">
-                <option value="{{$complain->complain_type_id}}">{{$complain->complain_type->title}}</option>
-                @foreach($complain_types as $type)
-                    @if($complain->complain_type_id != $type->id)
-                        <option value="{{$type->id}}">{{$type->title}}</option>
-                    @endif
-                @endforeach
+              <select name="" id="editComplainType{{$complain->id}}" class="form-control complain-select-type">
+                
               </select>
+              <b><span class="complain-type-status"></span></b>
             </div>
             <div class="form-group">
               <button type="button" class="btn btn-md btn-primary pull-right addFile" data-toggle="modal" data-target="#attachmentModal"><i class="fa fa-plus"></i> Tambah Lampiran</button>
@@ -62,8 +63,8 @@
               <!-- <input multiple="multiple" name="photos[]" type="file"> -->
             </div>
           </form>
-          @if($complain->attachments->count() > 0)
-            <table id="1" class="table table-bordered table-striped">
+         
+            <table class="table table-bordered table-striped attachment-table">
                   <thead>
                   <tr>
                     <th class="text-center" style="vertical-align: middle">No.</th>
@@ -72,6 +73,7 @@
                   </tr>
                   </thead>
                   <tbody>
+                  @if($complain->attachments->count() > 0)
                   <?php $x = 1; ?>
                   <div class="attachment-table">
                     @foreach($complain->attachments as $attachment)
@@ -87,6 +89,7 @@
                       <?php ++$x; ?>
                     @endforeach
                   </div>
+                  @endif
                   </tbody>
                   <!-- <tfoot>
                     <tr>
@@ -96,7 +99,7 @@
                     </tr>
                   </tfoot> -->
             </table>
-          @endif
+         
         </div>
         <div class="modal-footer">
           <div class="btn-group pull-right">

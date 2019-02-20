@@ -16,7 +16,7 @@
         <div class="modal-footer">
           <div class="pull-right">
             <button type="button" id="addUnitBtn" class="btn btn-lg btn-primary">Submit</button>
-            <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
+            <button type="button"  class="btn btn-lg btn-default" data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>

@@ -85,9 +85,9 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin-lte/dist/js/demo.js')}}"></script>
 <!-- page script -->
-<script src="{{asset('js/support.js')}}"></script>
+@yield('js')
 <script>
-  let a = {{Auth::user()->level_user}}
+let a = {{Auth::user()->level_user}}
 let url = String(window.location.href);
 if(a == 0 && url.includes('/antrian-keluhan')){
 $(function () {

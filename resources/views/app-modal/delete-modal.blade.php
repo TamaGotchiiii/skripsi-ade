@@ -7,14 +7,15 @@
           <h4 class="modal-title" style="color:white">Warning!!!</h4>
         </div>
         <div class="modal-body">
-          <h4>@if($complain->status == 1) Keluhan ini dalam pengerjaan, @endif
+          <h4><span class="in-progress-warning"></span>
             Apakah Anda Yakin Ingin Menghapus Data Keluhan Ini?
           </h4>
-          <label for="">Kode Antrian : {{$complain->complain_code}}</label><br>
+          <label for="">Kode Antrian : <span class="delete-complain-code"></span></label><br>
+          <label for="">Nama : <span class="delete-complain-name"></span></label>
         </div>
         <div class="modal-footer">
           <div class="pull-right">
-            <button type="button" class="btn btn-lg btn-danger">Ya</button>
+            <button type="button" class="btn btn-lg btn-danger confirm-delete-complain" data-id="0">Ya</button>
             <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
           </div>
         </div>

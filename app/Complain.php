@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Complain extends Model
 {
     protected $fillable = [
+        'complain_code',
         'name',
         'id_number',
         'email',
