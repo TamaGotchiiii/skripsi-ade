@@ -39,4 +39,88 @@ class UnitController extends Controller
             'result' => 'Berhasil menambahkan data unit!',
         ]);
     }
+
+    public function unitList()
+    {
+        $units = Unit::with('complains')
+        ->orderBy('name', 'asc')->get();
+
+        return view('unit-list.index', compact('units'));
+    }
+
+    public function checkUnit()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:units',
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'errors' => true,
+            ]);
+        }
+
+        return response([
+            'errors' => false,
+        ]);
+    }
+
+    public function addUnit()
+    {
+        $unit = new Unit([
+            'name' => request()->name,
+        ]);
+
+        $unit->save();
+
+        return response([
+            'result' => 'Ok',
+        ]);
+    }
+
+    public function getUnit()
+    {
+        $unit = Unit::find(request()->id);
+
+        return response([
+            'result' => $unit,
+        ]);
+    }
+
+    public function deleteUnit()
+    {
+        $unit = Unit::find(request()->id);
+        $unit->delete();
+
+        return response([
+            'result' => 'Ok',
+        ]);
+    }
+
+    public function checkEditUnit()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:units,name,'.request()->id.',id',
+        ]);
+        if ($validator->fails()) {
+            return response([
+                'errors' => true,
+            ]);
+        }
+
+        return response([
+            'errors' => false,
+        ]);
+    }
+
+    public function updateUnit()
+    {
+        $unit = Unit::find(request()->id);
+        $unit->name = request()->name;
+        $unit->save();
+
+        return response([
+            'result' => 'Ok',
+        ]);
+    }
 }

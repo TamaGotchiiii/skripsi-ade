@@ -8,6 +8,7 @@
         </div>
         <div class="modal-body">
           <form action="">
+            <input type="hidden" class="edit-complain-status" name="" value="">
             <div class="form-group">
               <label for="">Kode Antrian</label>
               <input type="text" class="form-control edit-complain-code" name="complain_code" readonly value="">
@@ -20,18 +21,14 @@
             @if(Auth::user()->level_user == 0)
               <div class="form-group complain-unit-frame">
                 <label for="">Fakultas/Unit</label>
-                <select name="" id="editComplainUnit{{$complain->id}}" class="form-control complain-select-unit">
-                  <option value="{{$complain->unit_id}}">{{$complain->unit->name}}</option>
-                  @foreach($units as $unit)
-                    <option value="{{$unit->id}}">{{$unit->name}}</option>
-                  @endforeach
+                <select name="" id="editComplainUnit" class="form-control complain-select-unit edit-complain-unit">
                 </select>
                 <b><span class="complain-unit-status"></span></b>
               </div>
             @else
               <div class="form-group">
                 <label for="">Fakultas/Unit</label>
-                <input type="text" class="form-control edit-complain-unit" value="" readonly>
+                <input type="text" class="form-control edit-complain-unit-field" value="" readonly>
               </div>
             @endif
             <div class="form-group complain-id-frame">
@@ -57,39 +54,25 @@
               <b><span class="complain-type-status"></span></b>
             </div>
             <div class="form-group">
-              <button type="button" class="btn btn-md btn-primary pull-right addFile" data-toggle="modal" data-target="#attachmentModal"><i class="fa fa-plus"></i> Tambah Lampiran</button>
+              <input type="hidden" id="editAttachmentCounter" name="" value='0'>
+              <input type="hidden" name="" value="0" id="editStartCounter">
+              <button type="button" class="btn btn-md btn-primary pull-right" id="editAttachmentBtn"><i class="fa fa-plus"></i> Tambah Lampiran</button>
               <label for="">Lampiran</label>
               <!-- tampilan bisa dimaksimalkan menggunakan dropzone.js -->
               <!-- <input multiple="multiple" name="photos[]" type="file"> -->
             </div>
           </form>
          
-            <table class="table table-bordered table-striped attachment-table">
+            <table class="table table-bordered table-striped edit-attachment-table" id="editAttachmentTable">
                   <thead>
                   <tr>
                     <th class="text-center" style="vertical-align: middle">No.</th>
                     <th class="text-center" style="vertical-align: middle">Lampiran</th>
+                    <th class="text-center" style="vertical-align: middle">Status File</th>
                     <th class="col-xs-1 text-center" style="vertical-align: middle">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
-                  @if($complain->attachments->count() > 0)
-                  <?php $x = 1; ?>
-                  <div class="attachment-table">
-                    @foreach($complain->attachments as $attachment)
-                      <tr>
-                        <td >{{$x}}</td>
-                        <td>{{$attachment->title}}</td>
-                        <td style="vertical-align: middle;" class="text-center">
-                          <div class="btn-group"> 
-                            <button type="button" title="Hapus Lampiran" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteAttachmentModal{{$attachment->id}}"><i class="fa fa-trash"></i></button>
-                          </div>
-                        </td>
-                      </tr>
-                      <?php ++$x; ?>
-                    @endforeach
-                  </div>
-                  @endif
                   </tbody>
                   <!-- <tfoot>
                     <tr>
@@ -99,12 +82,14 @@
                     </tr>
                   </tfoot> -->
             </table>
-         
+            <div id="editAttachmentField">
+            
+            </div>
         </div>
         <div class="modal-footer">
           <div class="btn-group pull-right">
-            <button type="button" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary edit-submit-complain" data-auth = "{{Auth::user()->level_user}}">Submit</button>
+            <button type="button" class="btn btn-warning edit-cancel-complain" data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>

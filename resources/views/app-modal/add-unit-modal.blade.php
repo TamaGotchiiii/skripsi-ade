@@ -7,9 +7,10 @@
           <h4 class="modal-title" style="color:white">Tambah Fakultas/Unit</h4>
         </div>
         <div class="modal-body">
-          <div class="form-group">
+          <div class="form-group add-unit-frame">
             <label for="">Nama fakultas/Unit : </label>
             <input type="text" name="fakultas" id="addFakultas" class="form-control">
+            <b><span style="color:#dd4b39" class="add-unit-status"></span></b>
           </div>
           
         </div>

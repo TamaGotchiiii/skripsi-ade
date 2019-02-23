@@ -20,6 +20,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/submit-complain', 'ComplainController@store');
     Route::delete('/delete-complain', 'ComplainController@destroy');
     Route::post('/get-complain', 'ComplainController@getComplain');
+    Route::post('/update-complain', 'ComplainController@updateComplain');
+    Route::post('/take-complain', 'ComplainController@takeComplain');
+    Route::get('/keluhan-diselesaikan', 'ComplainController@completed');
+    Route::post('/complain-done', 'ComplainController@done');
+    Route::get('/download-attachment/{id}', 'ComplainController@download');
 
     //User Section
     Route::get('/daftar-user', 'UserController@userList');
@@ -34,8 +39,16 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Unit Section
     Route::post('/user-submit-unit', 'UnitController@userStore');
+    Route::get('/daftar-unit', 'UnitController@unitList');
+    Route::post('/check-unit', 'UnitController@checkUnit');
+    Route::post('/add-unit', 'UnitController@addUnit');
+    Route::post('/get-unit', 'UnitController@getUnit');
+    Route::delete('/delete-unit', 'UnitController@deleteUnit');
+    Route::post('/check-edit-unit', 'UnitController@checkEditUnit');
+    Route::post('/update-unit', 'UnitController@updateUnit');
+
+    //Attachment Section
+    Route::delete('delete-attachment', 'AttachmentController@destroy');
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

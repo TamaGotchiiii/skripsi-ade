@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Attachment;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Chumper\Zipper\Zipper;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 class ComplainController extends Controller
 {
@@ -22,13 +25,18 @@ class ComplainController extends Controller
             ->where('id', '=', Auth::user()->id)
             ->first();
         if (Auth::user()->level_user != 2) {
+            $year = date('Y');
             $queue = Complain::where('status', '=', 0)->get();
             $onProgress = Complain::where('status', '=', 1)->get();
-            $done = Complain::where('status', '=', 2)->get();
+            $done = Complain::where('status', '=', 2)
+            ->where('created_at', 'LIKE', '%'.$year.'%')
+            ->get();
 
             if (Auth::user()->level_user == 0) {
                 $complains = Complain::with('complain_type', 'unit', 'attachments', 'user')
+                    ->where('status', '!=', 2)
                     ->where('user_id', '!=', Auth::user()->id)
+                    ->orWhere('user_id', '=', null)
                     ->orderBy('status', 'asc')
                     ->get();
             } else {
@@ -39,6 +47,7 @@ class ComplainController extends Controller
             return view('complain-queue.index', compact('complains', 'complain_types', 'queue', 'onProgress', 'done', 'units', 'user'));
         } else {
             $complains = Complain::with('complain_type', 'unit', 'attachments', 'user')
+                ->where('status', '!=', 2)
                 ->where('unit_id', '=', Auth::user()->unit_id)
                 ->get();
 
@@ -73,13 +82,55 @@ class ComplainController extends Controller
         if (Auth::user()->level_user != 0) {
             dd('You do not have any permission to access this page!');
         } else {
+            $year = date('Y');
             $complains = Complain::with('complain_type', 'unit', 'attachments')
+                ->orderBy('updated_at', 'asc')
                 ->where('status', '=', 2)
+                ->where('updated_at', 'LIKE', '%'.$year.'%')
+                ->get();
+
+            return view('complain-complete.index', compact('complains'));
+        }
+    }
+
+    public function completed()
+    {
+        if (Auth::user()->level_user != 0) {
+            dd('You do not have any permission to access this page!');
+        } else {
+            $year = date('Y');
+            $complains = Complain::with('complain_type', 'unit', 'attachments')
+                ->orderBy('updated_at', 'asc')
+                ->where('status', '=', 2)
+                ->where('updated_at', 'LIKE', '%'.$year.'%')
                 ->where('user_id', '=', Auth::user()->id)
                 ->get();
 
             return view('complain-complete.index', compact('complains'));
         }
+    }
+
+    public function done()
+    {
+        $complain = Complain::find(request()->id);
+
+        $complain->status = 2;
+
+        $complain->save();
+        $email = $complain->email;
+
+        Mail::send(['html' => 'mail.done'], [
+            'complain_code' => $complain->complain_code,
+            'user' => $complain->name,
+        ], function ($message) use ($email) {
+            $message->subject('Keluhan telah selesai!');
+            $message->from('unmulcomplaint@gmail.com', 'Biro Akademik Universitas Mulawarman');
+            $message->to($email);
+        });
+
+        return response([
+            'result' => 'Ok',
+        ]);
     }
 
     public function redirect()
@@ -115,6 +166,13 @@ class ComplainController extends Controller
         }
         if (Auth::user()->level_user == 2) {
             $unit = Unit::where('name', '=', request()->unit)->first();
+            $unit_id = $unit->id;
+            $user_id = null;
+            $status = 0;
+        } else {
+            $unit_id = request()->unit;
+            $user_id = Auth::user()->id;
+            $status = 1;
         }
         $complain = new Complain([
             'complain_code' => $complain_code,
@@ -123,10 +181,10 @@ class ComplainController extends Controller
             'email' => request()->email,
             'description' => request()->complain,
             'complain_type_id' => request()->complain_type,
-            'unit_id' => $unit->id,
-            'status' => 0,
+            'unit_id' => $unit_id,
+            'user_id' => $user_id,
+            'status' => $status,
         ]);
-        $complain->save();
 
         if (request()->attachmentsname != '') {
             $validator = Validator::make(request()->all(), [
@@ -147,7 +205,7 @@ class ComplainController extends Controller
             $complain->save();
             foreach (request()->file('files') as $file => $input) {
                 $fileName = sha1($files[$file]->getClientOriginalName().time()).'.'.$files[$file]->getClientOriginalExtension();
-                $files[$file]->storeAs('public/user-file', $fileName);
+                $files[$file]->storeAs('public/user-file/', $fileName);
                 $attachment = new Attachment([
                     'title' => $attachmentsName[$file],
                     'name' => $fileName,
@@ -181,8 +239,8 @@ class ComplainController extends Controller
         $attachments = Attachment::where('complain_id', '=', request()->id)->get();
 
         foreach ($attachments as $attachment) {
-            if (Storage::exists('public/user-file'.$attachment->name)) {
-                Storage::delete('public/user-file'.$attachment->name);
+            if (Storage::exists('public/user-file/'.$attachment->name)) {
+                Storage::delete('public/user-file/'.$attachment->name);
             }
             $attach = Attachment::find($attachment->id)->delete();
         }
@@ -206,5 +264,105 @@ class ComplainController extends Controller
             'units' => $units,
             'complain_types' => $complain_types,
         ]);
+    }
+
+    public function updateComplain()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|string',
+            'unit' => 'required|string',
+            'id' => 'required|string',
+            'email' => 'required|email',
+            'complain' => 'required',
+            'complain_type' => 'required|numeric',
+        ]);
+        if ($validator->fails()) {
+            return response([
+                'errors' => true,
+                'messages' => 'Periksa kembali input anda!',
+            ]);
+        }
+        if (Auth::user()->level_user == 2) {
+            $unit = Unit::where('name', '=', request()->unit)->first();
+            $unit_id = $unit->id;
+        } else {
+            $unit_id = request()->unit;
+        }
+        $complain = Complain::find(request()->id);
+        $complain->name = request()->name;
+        $complain->id_number = request()->id_num;
+        $complain->email = request()->email;
+        $complain->description = request()->complain;
+        $complain->complain_type_id = request()->complain_type;
+        $complain->unit_id = $unit_id;
+        $complain->status = request()->status;
+        $complain->save();
+
+        if (request()->attachmentsname != '') {
+            $validator = Validator::make(request()->all(), [
+                'files.*' => 'required|file|mimes:jpeg,jpg,doc,docx,pdf,png',
+            ], [
+                'files.*.mimes' => 'Ekstensi yang diperbolehkan hanya jpeg, jpg, png, doc, docx, pdf',
+            ]);
+
+            if ($validator->fails()) {
+                return response([
+                    'errors' => true,
+                    'messages' => $validator->messages(),
+                ]);
+            }
+            $data = request()->all();
+            $attachmentsName = $data['attachmentsname'];
+            $files = $data['files'];
+            $complain->save();
+            foreach (request()->file('files') as $file => $input) {
+                $fileName = sha1($files[$file]->getClientOriginalName().time()).'.'.$files[$file]->getClientOriginalExtension();
+                $files[$file]->storeAs('public/user-file/', $fileName);
+                $attachment = new Attachment([
+                    'title' => $attachmentsName[$file],
+                    'name' => $fileName,
+                    'complain_id' => $complain->id,
+                ]);
+                $attachment->save();
+            }
+        } else {
+            $complain->save();
+        }
+
+        return response([
+            'errors' => false,
+            'result' => 'Ok',
+        ]);
+    }
+
+    public function takeComplain()
+    {
+        $complain = Complain::find(request()->id);
+        $complain->user_id = Auth::user()->id;
+        $complain->status = 1;
+        $complain->save();
+
+        return response([
+            'result' => 'ok',
+        ]);
+    }
+
+    public function download($id)
+    {
+        File::cleanDirectory('zip');
+        $attachments = Attachment::where('complain_id', '=', $id)->get();
+        $complain = Complain::find($id);
+        $zipper = new Zipper();
+        $zipper->make('zip/'.$complain->complain_code.'.zip');
+
+        foreach ($attachments as $attachment) {
+            if (Storage::exists('public/user-file/'.$attachment->name)) {
+                $zipper->folder($attachment->title)->add('storage/user-file/'.$attachment->name);
+            }
+        }
+
+        $zipper->close();
+
+        return Response::download('zip/'.$complain->complain_code.'.zip');
     }
 }

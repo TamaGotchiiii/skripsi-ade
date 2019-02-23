@@ -8,23 +8,18 @@
         </div>
         <div class="modal-body">
           <h4>Download lampiran Keluhan ini?</h4>
-          <table id="1" class="table table-bordered table-striped">
+          <table class="table table-bordered table-striped" id="downloadTable">
                   <thead>
                   <tr>
                     <th class="text-center" style="vertical-align: middle">No.</th>
                     <th class="text-center" style="vertical-align: middle">Lampiran</th>
+                    <th class="text-center" style="vertical-align: middle">Status File</th>
+                    <th class="text-center" style="vertical-align: middle">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <?php $x = 1; ?>
                   <div class="attachment-table">
-                    @foreach($complain->attachments as $attachment)
-                      <tr>
-                        <td >{{$x}}</td>
-                        <td>{{$attachment->title}}</td>
-                      </tr>
-                      <?php ++$x; ?>
-                    @endforeach
+                    
                   </div>
                   </tbody>
                   <!-- <tfoot>
@@ -38,7 +33,7 @@
         </div>
         <div class="modal-footer">
           <div class="pull-right">
-            <button type="button" class="btn btn-lg btn-primary">Ya</button>
+            <a href="" class="btn btn-lg btn-primary confirm-download" id="">Ya</a>
             <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
           </div>
         </div>

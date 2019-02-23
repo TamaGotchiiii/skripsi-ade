@@ -113,12 +113,12 @@
                     <td style="vertical-align: middle;" class="text-center">
                       <div class="btn-group">
                         @if(Auth::user()->level_user == 0 && $complain->status == 0)
-                          <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#takeModal{{$complain->id}}" title="Tangani Keluhan" ><i class="fa fa-sign-in"></i></button>
+                          <button type="button" class="btn btn-xs btn-primary take-complain" data-toggle="modal" data-target="#takeModal" data-id="{{$complain->id}}" title="Tangani Keluhan" ><i class="fa fa-sign-in"></i></button>
                         @endif
                         <button type="button" class="btn btn-xs btn-success view-complain" data-toggle="modal" data-target="#viewModal" data-id="{{$complain->id}}"><i class="fa fa-eye" title="Lihat Detail Keluhan"></i></button>
                         @if($complain->status == 0 || $complain->status == 1)
                           @if($complain->status == 1)
-                            <button type="button" class="btn btn-xs btn-warning edit-with-confirm" data-toggle="modal" data-target="#confirmEditModal"><i class="fa fa-pencil" title="Ubah Data Keluhan"></i></button>
+                            <button type="button" class="btn btn-xs btn-warning edit-with-confirm" data-toggle="modal" data-target="#confirmEditModal" data-id="{{$complain->id}}"><i class="fa fa-pencil" title="Ubah Data Keluhan"></i></button>
                           @else
                           <button type="button" class="btn btn-xs btn-warning edit-complain" data-toggle="modal" data-target="#editModal" data-id="{{$complain->id}}"><i class="fa fa-pencil" title="Ubah Data Keluhan"></i></button>
                           @endif
@@ -143,23 +143,23 @@
               </table>
               
 
-              
+                
                 <div class="modal fade" id="editModal" role="dialog">
                   @include('app-modal.edit-modal')
                 </div>
+              <div class="modal fade add-complain-modal" id="addModal" role="dialog">
+                @include('app-modal.add-modal')
+              </div>
                 <div class="modal fade" id="deleteModal" data-id="{{$complain->id}}" role="dialog">
                   @include('app-modal.delete-modal')
                 </div>
-                <div class="modal fade" id="takeModal{{$complain->id}}" role="dialog">
+                <div class="modal fade" id="takeModal" role="dialog">
                   @include('app-modal.take-modal')
                 </div>
                 <div class="modal fade" id="viewModal" role="dialog">
                   @include('app-modal.view-modal')
                 </div>
               
-              <div class="modal fade" id="addModal" role="dialog">
-                @include('app-modal.add-modal')
-              </div>
               <div class="modal fade" id="confirmEditModal" role="dialog">
                 @include('app-modal.edit-confirm-modal')
               </div>

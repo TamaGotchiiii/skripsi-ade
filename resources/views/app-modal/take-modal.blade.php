@@ -8,14 +8,15 @@
         </div>
         <div class="modal-body">
           <h4>Apakah Anda Yakin Ingin Menangani Keluhan Ini?</h4>
-          <label for="">Kode Antrian : {{$complain->complain_code}}</label><br>
+          <label for="">Kode Antrian : <span class="complain-code"></span></label><br>
+          <label for="">Nama : <span class="complain-name"></span></label><br>
+          <label for="">Jenis Keluhan : <span class="complain-type"></span></label>
         </div>
         <div class="modal-footer">
           <div class="pull-right">
-            <button type="button" class="btn btn-lg btn-primary">Ya</button>
+            <button type="button" class="btn btn-lg btn-primary confirm-take-complain" data-id="">Ya</button>
             <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Tidak</button>
           </div>
         </div>
       </div>
-      
 </div>

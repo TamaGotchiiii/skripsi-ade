@@ -16,7 +16,7 @@
             @if(Auth::user()->level_user == 0)
               <div class="form-group complain-unit-frame">
                 <label for="">Fakultas/Unit</label>
-              <select name="" id="addComplainUnit" class="form-control complain-select-unit">
+              <select name="" id="addComplainUnit" class="form-control complain-select-unit add-complain-unit">
                   <option value="">Pilih Fakultas/Unit</option>
                   @foreach($units as $unit)
                     <option value="{{$unit->id}}">{{$unit->name}}</option>
@@ -27,7 +27,7 @@
             @else
               <div class="form-group">
                 <label for="">Fakultas/Unit</label>
-                <input type="text" class="form-control complain-select-unit" id="addComplainUnit" value="{{$user->unit->name}}" readonly>
+                <input type="text" class="form-control complain-select-unit add-complain-unit-field" id="addComplainUnitField" value="{{$user->unit->name}}" readonly>
               </div>
             @endif
             <div class="form-group complain-id-frame">
@@ -58,15 +58,15 @@
               <b><span class="complain-type-status"></span></b>
             </div>
             <div class="form-group">
-              <input type="hidden" class="attachment-counter" value="0">
-              <button type="button" class="btn btn-md btn-primary pull-right add-attachment"><i class="fa fa-plus"></i> Tambah Lampiran</button>
+              <input type="hidden" id="addAttachmentCounter" value="0">
+              <button type="button" class="btn btn-md btn-primary pull-right" id="addAttachmentBtn"><i class="fa fa-plus"></i> Tambah Lampiran</button>
               <label for="">Lampiran</label>
               <!-- tampilan bisa dimaksimalkan menggunakan dropzone.js -->
               <!-- <input multiple="multiple" name="photos[]" type="file"> -->
               <!-- <input type="file"> -->
             </div>
           </form>
-          <table class="table table-bordered table-striped attachment-table" id="addAttachment">
+          <table class="table table-bordered table-striped attachment-table" id="addAttachmentTable">
             <thead>
               <tr>
                 <th class="text-center" style="vertical-align:middle">No.</th>
@@ -85,8 +85,8 @@
         </div>
         <div class="modal-footer">
           <div class="btn-group pull-right">
-            <button type="button" class="btn btn-primary add-submit-complain">Submit</button>
-            <button type="button" class="btn btn-warning add-cancel-complain" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary add-submit-complain" data-auth="{{Auth::user()->level_user}}">Submit</button>
+            <button type="button" class="btn btn-warning add-cancel-complain" data-dismiss="modal" >Cancel</button>
           </div>
         </div>
       </div>
