@@ -388,13 +388,25 @@ class ComplainController extends Controller
             ->where('status', '=', 2)->get()
             ->groupBy('unit.id');
 
-        $complainsQueue = Complain::with('unit')
+        if ($year != date('Y')) {
+            $complainsQueue = Complain::with('unit')
+            ->where('created_at', 'LIKE', '%'.$year.'%')
             ->where('status', '=', 0)->get()
             ->groupBy('unit.id');
 
-        $complainsInProgress = Complain::with('unit')
+            $complainsInProgress = Complain::with('unit')
+            ->where('created_at', 'LIKE', '%'.$year.'%')
             ->where('status', '=', 1)->get()
             ->groupBy('unit.id');
+        } else {
+            $complainsQueue = Complain::with('unit')
+            ->where('status', '=', 0)->get()
+            ->groupBy('unit.id');
+
+            $complainsInProgress = Complain::with('unit')
+            ->where('status', '=', 1)->get()
+            ->groupBy('unit.id');
+        }
 
         $units = Unit::all();
 
