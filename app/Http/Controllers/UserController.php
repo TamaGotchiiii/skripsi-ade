@@ -225,4 +225,50 @@ class UserController extends Controller
             'errors' => false,
         ]);
     }
+
+    public function getUser()
+    {
+        $user = User::with('unit')
+        ->find(request()->id);
+        $units = Unit::orderBy('name', 'asc')->get();
+
+        return response([
+            'result' => $user,
+            'units' => $units,
+        ]);
+    }
+
+    public function changePassword()
+    {
+        $validator = Validator::make(request()->all(), [
+            'id' => 'required',
+            'oldPass' => 'required|string',
+            'newPass' => 'required|string|confirmed|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'errors' => true,
+                'old_password_errors' => false,
+                'messages' => $validator->messages(),
+            ]);
+        }
+
+        if (!Hash::check(request()->oldPass, Auth::user()->password)) {
+            return response([
+                'errors' => true,
+                'old_password_errors' => true,
+            ]);
+        }
+
+        $user = User::find(request()->id);
+
+        $user->password = bcrypt(request()->newPass);
+        $user->save();
+
+        return response([
+            'errors' => false,
+            'old_password_errors' => false,
+        ]);
+    }
 }

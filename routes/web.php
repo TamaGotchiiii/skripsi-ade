@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/keluhan-diselesaikan', 'ComplainController@completed');
     Route::post('/complain-done', 'ComplainController@done');
     Route::get('/download-attachment/{id}', 'ComplainController@download');
+    Route::get('/laporan-keluhan/{y}', 'ComplainController@report');
 
     //User Section
     Route::get('/daftar-user', 'UserController@userList');
@@ -36,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/check-edit-username', 'UserController@checkEditUsername');
     Route::post('/update-user', 'UserController@update');
     Route::post('reset-password', 'UserController@resetPassword');
+    Route::post('/get-user', 'UserController@getUser');
+    Route::post('/change-password', 'UserController@changePassword');
 
     //Unit Section
     Route::post('/user-submit-unit', 'UnitController@userStore');

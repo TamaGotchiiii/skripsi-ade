@@ -131,8 +131,9 @@
         </li>
       @endif
       @if(Auth::user()->level_user != 2)
+        <?php $year = date('Y'); ?>
         <li>
-          <a href="{{url('/laporan-keluhan')}}">
+          <a href="{{url('/laporan-keluhan/'.$year)}}">
           <i class="fa fa-line-chart"></i> <span>Laporan Keluhan</span>
           </a>
         </li>
@@ -151,17 +152,18 @@
       @endif
       <li class="header">USER PROFILE CONTROL</li>
       <li>
-        <a href="{{url('/keluhan-selesai')}}">
+        <a href="" class="profil-user" data-toggle="modal" data-target="#profilUser" data-id="{{Auth::user()->id}}">
         <i class="fa fa-user"></i> <span>Profil User</span>
         </a>
       </li>
       <li>
-        <a href="{{url('/keluhan-selesai')}}">
-        <i class="fa fa-lock"></i> <span>Password User</span>
+        <a href="" data-toggle="modal" class="change-password" data-target="#changePassword">
+        <i class="fa fa-lock"></i> <span>Ganti Password</span>
         </a>
       </li>
     </ul>
   </section>
+  
   <!-- /.sidebar -->
 </aside>
 
@@ -170,6 +172,12 @@
   <!-- Content Header (Page header) -->
         @yield('content')
   <!-- /.content -->
+  <div class="modal fade" id="profilUser" role="dialog">
+    @include('app-modal.edit-profile')
+  </div>
+  <div class="modal fade" id="changePassword" role="dialog">
+    @include('app-modal.change-password');
+  </div>
 </div>
 <!-- /.content-wrapper -->
 
@@ -203,11 +211,14 @@
 <script src="{{asset('admin-lte/bower_components/fastclick/lib/fastclick.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin-lte/dist/js/adminlte.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" charset="utf-8"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin-lte/dist/js/demo.js')}}"></script>
 <!-- page script -->
 @yield('js')
+<script src="{{asset('js/layout/app.js')}}"></script>
 <script>
+
 let a = {{Auth::user()->level_user}}
 let url = String(window.location.href);
 if(a == 0 && url.includes('/antrian-keluhan')){

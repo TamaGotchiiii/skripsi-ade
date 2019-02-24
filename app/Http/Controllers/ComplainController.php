@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Chumper\Zipper\Zipper;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Carbon;
 
 class ComplainController extends Controller
 {
@@ -364,5 +365,42 @@ class ComplainController extends Controller
         $zipper->close();
 
         return Response::download('zip/'.$complain->complain_code.'.zip');
+    }
+
+    public function report($y)
+    {
+        $year = $y;
+        $months = Complain::where('updated_at', 'LIKE', '%'.$year.'%')
+        ->where('status', '=', 2)->get()->groupBy(function ($d) {
+            return Carbon::parse($d->updated_at)->format('m');
+        });
+
+        // $complains = Complain::with('unit')
+        // ->orderBy('unit_id', 'asc')
+        // ->where('updated_at', 'LIKE', '%'.$year.'%')
+        // ->where('status', '=', 2)->get()
+        // ->groupBy('unit.id')->map(function ($d) {
+        //     return $d->count();
+        // });
+
+        $complainsDone = Complain::with('unit')
+            ->where('updated_at', 'LIKE', '%'.$year.'%')
+            ->where('status', '=', 2)->get()
+            ->groupBy('unit.id');
+
+        $complainsQueue = Complain::with('unit')
+            ->where('status', '=', 0)->get()
+            ->groupBy('unit.id');
+
+        $complainsInProgress = Complain::with('unit')
+            ->where('status', '=', 1)->get()
+            ->groupBy('unit.id');
+
+        $units = Unit::all();
+
+        $years = Complain::orderBy('updated_at', 'asc')
+        ->where('status', '=', 2)->get();
+
+        return view('complain-report.index', compact('months', 'complainsDone', 'units', 'year', 'years', 'complainsQueue', 'complainsInProgress'));
     }
 }
