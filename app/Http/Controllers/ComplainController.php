@@ -388,14 +388,14 @@ class ComplainController extends Controller
             ->where('status', '=', 2)->get()
             ->groupBy('unit.id');
 
-        if ($year != date('Y')) {
+        if ($y != date('Y')) {
             $complainsQueue = Complain::with('unit')
-            ->where('created_at', 'LIKE', '%'.$year.'%')
+            ->where('updated_at', 'LIKE', '%'.$year.'%')
             ->where('status', '=', 0)->get()
             ->groupBy('unit.id');
 
             $complainsInProgress = Complain::with('unit')
-            ->where('created_at', 'LIKE', '%'.$year.'%')
+            ->where('updated_at', 'LIKE', '%'.$year.'%')
             ->where('status', '=', 1)->get()
             ->groupBy('unit.id');
         } else {
@@ -410,8 +410,7 @@ class ComplainController extends Controller
 
         $units = Unit::all();
 
-        $years = Complain::orderBy('updated_at', 'asc')
-        ->where('status', '=', 2)->get();
+        $years = Complain::orderBy('updated_at', 'asc')->get();
 
         return view('complain-report.index', compact('months', 'complainsDone', 'units', 'year', 'years', 'complainsQueue', 'complainsInProgress'));
     }
