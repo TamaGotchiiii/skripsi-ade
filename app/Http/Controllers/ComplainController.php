@@ -80,18 +80,14 @@ class ComplainController extends Controller
 
     public function complete()
     {
-        if (Auth::user()->level_user != 0) {
-            dd('You do not have any permission to access this page!');
-        } else {
-            $year = date('Y');
-            $complains = Complain::with('complain_type', 'unit', 'attachments')
+        $year = date('Y');
+        $complains = Complain::with('complain_type', 'unit', 'attachments')
                 ->orderBy('updated_at', 'asc')
                 ->where('status', '=', 2)
                 ->where('updated_at', 'LIKE', '%'.$year.'%')
                 ->get();
 
-            return view('complain-complete.index', compact('complains'));
-        }
+        return view('complain-complete.index', compact('complains'));
     }
 
     public function completed()

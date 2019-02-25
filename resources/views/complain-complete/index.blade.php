@@ -47,13 +47,11 @@
                   <td>{{$complain->created_at->format('d M Y')}}</td> 
                   <td style="vertical-align: middle;"><i class="dot-done"></i> Selesai, {{$complain->updated_at->format('d M Y')}}</td>
                   <td style="vertical-align: middle;">{{$complain->user->name}}</td>
-                  @if(Auth::user()->level_user != 1)
                     <td style="vertical-align: middle;" class="text-center">
                       <div class="btn-group">
                         <button type="button" class="btn btn-xs btn-success view-complain" data-toggle="modal" data-target="#viewModal" data-id="{{$complain->id}}"><i class="fa fa-eye" title="Lihat Detail Keluhan"></i></button>
                       </div>
                     </td>
-                  @endif
                 </tr>
                 <?php ++$x; ?>
                 @endforeach
