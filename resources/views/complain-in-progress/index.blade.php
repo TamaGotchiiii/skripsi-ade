@@ -75,7 +75,7 @@
               <div class="modal fade" id="editModal" role="dialog">
                   @include('app-modal.edit-modal')
                 </div>
-                <div class="modal fade" id="deleteModal" data-id="{{$complain->id}}" role="dialog">
+                <div class="modal fade" id="deleteModal" role="dialog">
                   @include('app-modal.delete-modal')
                 </div>
                 <div class="modal fade" id="downloadModal" role="dialog">

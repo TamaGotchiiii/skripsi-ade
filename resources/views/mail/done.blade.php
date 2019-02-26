@@ -250,7 +250,16 @@ a[x-apple-data-detectors=true] {
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 20px; padding-left: 20px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
 	<div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:180%; padding-right: 20px; padding-left: 20px; padding-top: 0px; padding-bottom: 0px;">	
-        <div style="font-size:12px;line-height:22px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 25px"><span style="font-family: 'lucida sans unicode', 'lucida grande', sans-serif; font-size: 16px; line-height: 28px;">Keluhan dengan kode antrian : ({{$complain_code}}). Telah diselesaikan. Terima Kasih <br> <br></span></p></div>	
+        <div style="font-size:12px;line-height:22px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 25px"><span style="font-family: 'lucida sans unicode', 'lucida grande', sans-serif; font-size: 16px; line-height: 28px;">Keluhan dengan kode antrian : ({{$complain_code}}). Telah diselesaikan.  
+        @if($note != '')
+        <br>
+        Catatan Admin : 
+        <br>
+        {!! nl2br(e($note)) !!}
+        <br>
+        <br>
+        @endif
+        Terima Kasih. <br> <br></span></p></div>	
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>

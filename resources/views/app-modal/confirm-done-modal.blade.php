@@ -11,6 +11,10 @@
           <label for="">Kode Antrian : <span class="complain-code"></span></label><br>
           <label for="">Nama : <span class="complain-name"></span></label> <br>
           <label for="">Jenis Keluhan : <span class="complain-type"></span></label>
+          <div class="form-group">
+            <label for="">Catatan Admin : </label>
+            <textarea id="note" cols="30" rows="10" class="form-control"></textarea>
+          </div>
         </div>
         <div class="modal-footer">
           <div class="pull-right">

@@ -811,6 +811,7 @@ $(document).ready(function(){
     $(document).on('click', '.submit-confirm-done', function(){
         let el = $(this),
             id = el.data('id');
+        let note = $('#note').val();
         el.prop('disabled', true);
         $('.cancel-confirm-done').prop('disabled', true);
         $.ajax({
@@ -819,7 +820,8 @@ $(document).ready(function(){
             },
             url: 'complain-done',
             data: {
-                id
+                id,
+                note
             },
             dataType: ' json',
             method: 'post',

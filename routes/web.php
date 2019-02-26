@@ -54,4 +54,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('delete-attachment', 'AttachmentController@destroy');
 });
 
-Auth::routes();
+Route::get('login', [
+    'as' => 'login',
+    'uses' => 'Auth\LoginController@showLoginForm',
+  ]);
+  Route::post('login', [
+    'as' => '',
+    'uses' => 'Auth\LoginController@login',
+  ]);
+  Route::post('logout', [
+    'as' => 'logout',
+    'uses' => 'Auth\LoginController@logout',
+  ]);

@@ -50,9 +50,7 @@
               <select name="" id="addComplainType" class="form-control complain-select-type">
                 <option value="">Pilih Jenis Keluhan</option>
                 @foreach($complain_types as $type)
-                    @if($complain->complain_type_id != $type->id)
                         <option value="{{$type->id}}">{{$type->title}}</option>
-                    @endif
                 @endforeach
               </select>
               <b><span class="complain-type-status"></span></b>

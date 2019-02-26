@@ -119,6 +119,7 @@ class ComplainController extends Controller
         Mail::send(['html' => 'mail.done'], [
             'complain_code' => $complain->complain_code,
             'user' => $complain->name,
+            'note' => request()->note,
         ], function ($message) use ($email) {
             $message->subject('Keluhan telah selesai!');
             $message->from('unmulcomplaint@gmail.com', 'Biro Akademik Universitas Mulawarman');
