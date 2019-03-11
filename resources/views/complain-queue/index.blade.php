@@ -150,7 +150,7 @@
               <div class="modal fade add-complain-modal" id="addModal" role="dialog">
                 @include('app-modal.add-modal')
               </div>
-                <div class="modal fade" id="deleteModal" data-id="{{$complain->id}}" role="dialog">
+                <div class="modal fade" id="deleteModal" data-id= role="dialog">
                   @include('app-modal.delete-modal')
                 </div>
                 <div class="modal fade" id="takeModal" role="dialog">
